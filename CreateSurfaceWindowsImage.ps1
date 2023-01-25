@@ -10,8 +10,11 @@
 
 .NOTES
     Author:       Microsoft
-    Last Update:  8th November 2022
-    Version:      1.3.1.0
+    Last Update:  25th January 2023
+    Version:      1.3.2.0
+
+    Version 1.3.2.0
+    - Update Microsoft Catalog downloads
 
     Version 1.3.1.0
     - Added support for Windows 11 22H2
@@ -815,7 +818,7 @@ Function Download-LatestUpdates
             $downloaddialog = $downloaddialog.Replace('www.download.windowsupdate', 'download.windowsupdate')
             $DLWUDOTCOM = ($downloaddialog | Select-String -AllMatches -Pattern "(http[s]?\://download\.windowsupdate\.com\/[^\'\""]*)" | Select-Object -Unique | ForEach-Object { [PSCustomObject] @{ Source = $_.matches.value } } ).source
             $DLDELDOTCOM = ($downloaddialog | Select-String -AllMatches -Pattern "(http[s]?\://dl\.delivery\.mp\.microsoft\.com\/[^\'\""]*)" | Select-Object -Unique | ForEach-Object { [PSCustomObject] @{ Source = $_.matches.value } } ).source
-            $DLCATWUDOTCOM = ($downloaddialog | Select-String -AllMatches -Pattern "(http[s]?\://catalog\.s\.download\.windowsupdate\.com\/[^\'\""]*)" | Select-Object -Unique | ForEach-Object { [PSCustomObject] @{ Source = $_.matches.value } }).source
+            $DLCATDOTCOM = ($downloaddialog | Select-String -AllMatches -Pattern "(http[s]?\://catalog\.s\.download\.windowsupdate\.com\/[^\'\""]*)" | Select-Object -Unique | ForEach-Object { [PSCustomObject] @{ Source = $_.matches.value } }).source
 
             If ($DLWUDOTCOM)
             {
@@ -825,11 +828,11 @@ Function Download-LatestUpdates
             {
                 $links = $DLDELDOTCOM
             }
-            If ($DLCATWUDOTCOM)
+            If ($DLCATDOTCOM)
             {
                 $links = $DLCATWUDOTCOM
             }
-            
+
 
             If ($links)
             {
